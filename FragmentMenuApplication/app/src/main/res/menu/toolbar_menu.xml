@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/gtoup1">
+        <item
+            android:id="@+id/first_page"
+            android:title="Firdt Page" />
+        <item
+            android:id="@+id/second_page"
+            android:title="Second Page" />
+    </group>
+    <group android:id="@+id/gtoup2">
+        <item
+            android:id="@+id/third_page"
+            android:title="Third Page" />
+        <item
+            android:id="@+id/four_page"
+            android:title="Four Page" />
+    </group>
+</menu>

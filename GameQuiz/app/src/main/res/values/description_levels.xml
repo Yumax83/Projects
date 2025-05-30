@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="level_one"> Choose the number that is higher.\nQuestions can be repeated until you get 20 points. </string>
+    <string name="level_one_end"> "Congratulations, level completed!\n
+Did you know that the number seven is considered the luckiest number.
+There are seven days in a week, seven continents, seven notes, seven colors of the rainbow and much more.
+Also, the number seven is the favorite number of most people in the world." </string>
+
+    <string name="level_two"> "Choose the Roman numeral that is greater.\nQuestions can be repeated until you reach 20 points." </string>
+
+    <string name="level_two_end"> "Congratulations, level completed!\n
+           Did you know that there is no zero in Roman numerals?" </string>
+
+    <string name="level_three"> "Choose the fraction that is larger.\nQuestions can be repeated until you reach 20 points. " </string>
+
+    <string name="level_three_end"> "Congratulations, you've completed the level!\n
+Did you know that operations with fractions were considered the most difficult area of mathematics in the middle of the century?" </string>
+
+    <string name="level_four"> "Choose something edible.\nQuestions can be repeated until you reach 20 points." </string>
+
+    <string name="level_four_end"> "Congratulations, you've completed the level!\n
+Did you know that many crocodiles swallow stones in order to dive into the water faster and stay on the bottom?" </string>
+</resources>

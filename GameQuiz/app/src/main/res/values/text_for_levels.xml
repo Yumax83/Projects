@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name ="lvl1_text_0">Zero</string>
+    <string name ="lvl1_text_1">One</string>
+    <string name ="lvl1_text_2">Two</string>
+    <string name ="lvl1_text_3">Three</string>
+    <string name ="lvl1_text_4">Four</string>
+    <string name ="lvl1_text_5">Five</string>
+    <string name ="lvl1_text_6">Six</string>
+    <string name ="lvl1_text_7">Seven</string>
+    <string name ="lvl1_text_8">Eight</string>
+    <string name ="lvl1_text_9">Nine</string>
+
+    <string name ="lvl2_text_1">I</string>
+    <string name ="lvl2_text_2">II</string>
+    <string name ="lvl2_text_3">III</string>
+    <string name ="lvl2_text_4">IV</string>
+    <string name ="lvl2_text_5">V</string>
+    <string name ="lvl2_text_6">VI</string>
+    <string name ="lvl2_text_7">VII</string>
+    <string name ="lvl2_text_8">VIII</string>
+    <string name ="lvl2_text_9">IX</string>
+    <string name ="lvl2_text_10">X</string>
+
+
+    <string name ="lvl3_text_1">1/16</string>
+    <string name ="lvl3_text_2">1/8</string>
+    <string name ="lvl3_text_3">3/16</string>
+    <string name ="lvl3_text_4">1/4</string>
+    <string name ="lvl3_text_5">5/16</string>
+    <string name ="lvl3_text_6">1/3</string>
+    <string name ="lvl3_text_7">3/8</string>
+    <string name ="lvl3_text_8">7/16</string>
+    <string name ="lvl3_text_9">1/2</string>
+    <string name ="lvl3_text_10">9/16</string>
+    <string name ="lvl3_text_11">5/8</string>
+    <string name ="lvl3_text_12">2/3</string>
+    <string name ="lvl3_text_13">11/16</string>
+    <string name ="lvl3_text_14">3/4</string>
+    <string name ="lvl3_text_15">13/16</string>
+    <string name ="lvl3_text_16">7/8</string>
+    <string name ="lvl3_text_17">15/16</string>
+    <string name ="lvl3_text_18">1</string>
+    <string name ="lvl3_text_19">4/3</string>
+    <string name ="lvl3_text_20">3/2</string>
+    <string name ="lvl3_text_21">7/4</string>
+
+
+    <string name ="lvl4_text_1">Pear</string>
+    <string name ="lvl4_text_2">Snowman</string>
+    <string name ="lvl4_text_3">Apple</string>
+    <string name ="lvl4_text_4">Present</string>
+    <string name ="lvl4_text_5">Eggplant</string>
+    <string name ="lvl4_text_6">Garland</string>
+    <string name ="lvl4_text_7">Carrot</string>
+    <string name ="lvl4_text_8">Deer</string>
+    <string name ="lvl4_text_9">Potato</string>
+    <string name ="lvl4_text_10">Bags</string>
+    <string name ="lvl4_text_11">Lemon</string>
+    <string name ="lvl4_text_12">Christmas tree</string>
+    <string name ="lvl4_text_13">Onion</string>
+    <string name ="lvl4_text_14">House</string>
+    <string name ="lvl4_text_15">Tomato</string>
+    <string name ="lvl4_text_16">Bag</string>
+    <string name ="lvl4_text_17">Avocado</string>
+    <string name ="lvl4_text_18">Ball</string>
+    <string name ="lvl4_text_19">Pomegranate</string>
+    <string name ="lvl4_text_20">Cap</string>
+
+
+
+</resources>
