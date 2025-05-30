@@ -46,9 +46,15 @@ public class MainActivity extends AppCompatActivity {
                 } else  if  (item.getItemId() ==R.id.second_page) {
                     replaceFragment(new SecondPage());
                     drawerLayout.closeDrawer(GravityCompat.START);
+                }else  if  (item.getItemId() ==R.id.third_page) {
+                    replaceFragment(new ThirdPage());
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }else  if  (item.getItemId() ==R.id.four_page) {
+                    replaceFragment(new FourPage());
+                    drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 return false;
-                //lsdjflkdjfghskghdisfg
+
             }
         });
     }

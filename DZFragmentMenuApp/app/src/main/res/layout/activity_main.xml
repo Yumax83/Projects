@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/dark_gray"
             app:navigationIcon="@drawable/baseline_10k_24"
-            app:title="Inspection of the object "
+            app:title="ВСЕ ОБО ВСЁМ"
             app:titleTextColor="@color/white"
             android:paddingTop="20dp"/>
 
