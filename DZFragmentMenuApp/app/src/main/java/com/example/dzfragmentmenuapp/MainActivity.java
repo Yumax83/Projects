@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
 
 
-        replaceFragment(new FirstPage());
+        replaceFragment(new SecondPage());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

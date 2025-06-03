@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FourPage#newInstance} factory method to
+ * Use the {@link FourthPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FourPage extends Fragment {
+public class FourthPage extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class FourPage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FourPage() {
+    public FourthPage() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class FourPage extends Fragment {
      * @return A new instance of fragment FourPage.
      */
     // TODO: Rename and change types and number of parameters
-    public static FourPage newInstance(String param1, String param2) {
-        FourPage fragment = new FourPage();
+    public static FourthPage newInstance(String param1, String param2) {
+        FourthPage fragment = new FourthPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
