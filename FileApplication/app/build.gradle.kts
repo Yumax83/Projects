@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.fragmentmenuapplication"
+    namespace = "com.example.fileapplication"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.fragmentmenuapplication"
+        applicationId = "com.example.fileapplication"
         minSdk = 28
         targetSdk = 35
         versionCode = 1
@@ -37,12 +37,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.car.ui.lib)
-    implementation(libs.annotations)
-    implementation(libs.annotations)
-    implementation(libs.annotations)
-    implementation(libs.annotations)
-    implementation(libs.annotations)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
