@@ -21,15 +21,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.filemanagerprojectapp.FileAdapter;
+import com.example.filemanagerprojectapp.OnFileSelectedListener;
 import com.example.filemanagerprojectapp.R;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements OnFileSelectedListener {
     View view;
     File storage;
+    private FileAdapter fileAdapter;
 
 
     @Override
@@ -51,8 +54,10 @@ public class CardFragment extends Fragment {
 
             // получаем доступ к внешней карте памяти
             storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте
-            tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
+           tvPathHolderCard.setText("Внешняя SD-карта (список файлов и папок):");// Показываешь путь на экране
+          // tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
             // вызов метода запроса разрешений
+            runtimePermission();
         } else {
             // Если SD-карты нет — используем внутреннюю
             storage = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -123,10 +128,30 @@ public class CardFragment extends Fragment {
     }
 
     private void displayFiles() {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_internal);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_card);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         List<File> fileList = new ArrayList<>();
         fileList.addAll(findFiles(storage));
+
+        fileAdapter = new FileAdapter(getContext(), fileList, this);
+        recyclerView.setAdapter(fileAdapter);
+    }
+
+    @Override
+    public void onFileClicked(File file) {
+        if(file.isDirectory()){
+            Bundle bundle = new Bundle();
+            bundle.putString("path", file.getAbsolutePath());
+            InternalFragment internalFragment = new InternalFragment();
+            internalFragment.setArguments(bundle);
+
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
+        }
+    }
+
+    @Override
+    public void onFileLongClicked(File file) {
+
     }
 }

@@ -62,7 +62,8 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
             storage = new File(data);
         }
 
-        tvPathHolder.setText(storage.getAbsolutePath()); //
+        //tvPathHolder.setText(storage.getAbsolutePath()); //
+        tvPathHolder.setText("Внутренняя память (список файлов и папок):"); //
         runtimePermission();
 
         return view;
@@ -132,7 +133,7 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         fileList = new ArrayList<>();
         fileList.addAll(findFiles(storage));
-        System.out.println(fileList); //logcat
+       // System.out.println(fileList); //logcat
 
 
         fileAdapter = new FileAdapter(getContext(), fileList, this);
