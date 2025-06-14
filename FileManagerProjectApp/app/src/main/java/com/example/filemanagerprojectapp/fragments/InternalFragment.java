@@ -2,6 +2,7 @@ package com.example.filemanagerprojectapp.fragments;
 
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -19,11 +20,14 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
 import com.example.filemanagerprojectapp.FileAdapter;
+import com.example.filemanagerprojectapp.FileOpener;
 import com.example.filemanagerprojectapp.OnFileSelectedListener;
 import com.example.filemanagerprojectapp.R;
 
@@ -44,6 +48,8 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
     File storage;
     String data;
     View view;
+
+    String[] items = {"Detalis, Rename, Delete"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,11 +156,47 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
             internalFragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
+        } else  {
+            FileOpener.openFile(getContext(),file);
         }
     }
 
     @Override
     public void onFileLongClicked(File file) {
+        final Dialog optionDialog = new Dialog(getContext());
+        optionDialog.setContentView(R.layout.option_dialog);
+        optionDialog.setTitle("Select Options.");
+        ListView options = optionDialog.findViewById(R.id.list);
 
+        
+        optionDialog.show();
+
+    }
+    class CustomAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return items.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return items[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View myView = getLayoutInflater().inflate(R.layout.option_layout, null);
+            TextView txtOptions = myView.findViewById(R.id.txt_option);
+            ImageView imgOptions = myView.findViewById(R.id.img_option);
+
+            txtOptions.setText(items[position]);
+            return null;
+        }
     }
 }
