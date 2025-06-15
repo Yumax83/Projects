@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.filemanagerprojectapp.FileAdapter;
+import com.example.filemanagerprojectapp.FileOpener;
 import com.example.filemanagerprojectapp.OnFileSelectedListener;
 import com.example.filemanagerprojectapp.R;
 
@@ -33,7 +34,9 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
     View view;
     File storage;
     private FileAdapter fileAdapter;
+    private RecyclerView recyclerView;
 
+    String data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +57,8 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
 
             // получаем доступ к внешней карте памяти
             storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте
-           tvPathHolderCard.setText("Внешняя SD-карта (список файлов и папок):");// Показываешь путь на экране
-          // tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
+         //  tvPathHolderCard.setText("Внешняя SD-карта (список файлов и папок):");// Показываешь путь на экране
+           tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
             // вызов метода запроса разрешений
             runtimePermission();
         } else {
@@ -66,6 +69,7 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
             //Отображаем, что работаем с внутренней
             runtimePermission(); // вызов метода запроса разрешений
         }
+
         return view;
     }
 
@@ -141,14 +145,19 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
     @Override
     public void onFileClicked(File file) {
         if(file.isDirectory()){
-            Bundle bundle = new Bundle();
-            bundle.putString("path", file.getAbsolutePath());
-            InternalFragment internalFragment = new InternalFragment();
-            internalFragment.setArguments(bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("path", storage.getAbsolutePath());
+          // InternalFragment internalFragment = new InternalFragment();
+            //internalFragment.setArguments(bundle);
+          CardFragment cardFragment = new CardFragment();
+//          cardFragment.setArguments(storage.getAbsolutePath());
 
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
+         // requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, cardFragment).addToBackStack(null).commit();
+
         }
     }
+
 
     @Override
     public void onFileLongClicked(File file) {

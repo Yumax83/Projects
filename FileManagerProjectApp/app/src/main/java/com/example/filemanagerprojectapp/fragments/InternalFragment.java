@@ -2,7 +2,9 @@ package com.example.filemanagerprojectapp.fragments;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -17,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,7 +36,11 @@ import com.example.filemanagerprojectapp.OnFileSelectedListener;
 import com.example.filemanagerprojectapp.R;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+
 import java.util.List;
 
 
@@ -49,7 +57,7 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
     String data;
     View view;
 
-    String[] items = {"Detalis, Rename, Delete"};
+    String[] items = {"Details", "Rename", "Delete"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,7 +147,7 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         fileList = new ArrayList<>();
         fileList.addAll(findFiles(storage));
-       // System.out.println(fileList); //logcat
+        // System.out.println(fileList); //logcat
 
 
         fileAdapter = new FileAdapter(getContext(), fileList, this);
@@ -149,15 +157,15 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
 
     @Override
     public void onFileClicked(File file) {
-        if(file.isDirectory()){
+        if (file.isDirectory()) {
             Bundle bundle = new Bundle();
             bundle.putString("path", file.getAbsolutePath());
             InternalFragment internalFragment = new InternalFragment();
             internalFragment.setArguments(bundle);
 
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
-        } else  {
-            FileOpener.openFile(getContext(),file);
+        } else {
+            FileOpener.openFile(getContext(), file);
         }
     }
 
@@ -168,11 +176,56 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
         optionDialog.setTitle("Select Options.");
         ListView options = optionDialog.findViewById(R.id.list);
 
-        
+        CustomAdapter customAdapter = new CustomAdapter();
+        options.setAdapter(customAdapter);
+
         optionDialog.show();
 
+        options.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+
+                switch (selectedItem) {
+                    case "Details":
+                        AlertDialog.Builder detailDialog = new AlertDialog.Builder(getContext());
+                        detailDialog.setTitle("Details");
+                        final TextView details = new TextView(getContext());
+                        detailDialog.setView(details);
+                        Date lastModified = new Date(file.lastModified());
+                        SimpleDateFormat formatted = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        String formattedDate = formatted.format(lastModified);
+
+//                        details.setText(String.format(
+//                                "File Name: " + file.getName() + "\n" + "Size: "
+//                                        + Formatter.formatFileSize(getContext(), file.length()) + "\n" + "Path: " + file.getAbsolutePath()
+//                                        + "\n" + "Last Modified: " + formattedDate));
+
+                        details.setText(String.format("File Name: %s\nSize: %s\nPath: %s\nLast Modified: %s",
+                                file.getName(), Formatter.formatShortFileSize(getContext(), file.length()), file.getAbsolutePath(), formattedDate));
+
+                        details.setPadding(70, 10, 10, 10);
+
+                        detailDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                               // optionDialog.cancel(); //закрывает два окна
+                                optionDialog.closeOptionsMenu(); //закрывает одно окно
+                            }
+                        });
+
+
+                        AlertDialog alertDialogDetails = detailDialog.create();
+                        alertDialogDetails.show();
+                        break;
+
+                }
+            }
+        });
+
     }
-    class CustomAdapter extends BaseAdapter{
+
+    class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -196,7 +249,15 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
             ImageView imgOptions = myView.findViewById(R.id.img_option);
 
             txtOptions.setText(items[position]);
-            return null;
+
+            if (items[position].equals("Details")) {
+                imgOptions.setImageResource(R.drawable.baseline_info);
+            } else if (items[position].equals("Rename")) {
+                imgOptions.setImageResource(R.drawable.baseline_edit);
+            } else if (items[position].equals("Delete")) {
+                imgOptions.setImageResource(R.drawable.baseline_delete);
+            }
+            return myView;
         }
     }
 }

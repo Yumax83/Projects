@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
        toggle.syncState(); //чтобы иконка появилась.
 
-        replaceFragment(new InternalFragment());
-       // replaceFragment(new CardFragment());
+        //replaceFragment(new InternalFragment());
+        replaceFragment(new CardFragment());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
