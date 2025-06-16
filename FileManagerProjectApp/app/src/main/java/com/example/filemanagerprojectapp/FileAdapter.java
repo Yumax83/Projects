@@ -73,6 +73,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileViewHolder> {
             @Override
             public void onClick(View v) {
                 listener.onFileClicked(file.get(position));
+
             }
         });
 
@@ -80,6 +81,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileViewHolder> {
             @Override
             public boolean onLongClick(View v) {
                 listener.onFileLongClicked(file.get(position));
+
                 return true;
             }
         });

@@ -31,46 +31,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardFragment extends Fragment implements OnFileSelectedListener {
-    View view;
-    File storage;
+    View view1;
+    File storage1;
     private FileAdapter fileAdapter;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView1;
 
-    String data;
+    String data1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_card, container, false);
+        view1 = inflater.inflate(R.layout.fragment_card, container, false);
 
-        ImageView imgBackCard = view.findViewById(R.id.img_back_card);
-        TextView tvPathHolderCard = view.findViewById(R.id.tv_path_holder_card);
+        ImageView imgBackCard = view1.findViewById(R.id.img_back_card);
+        TextView tvPathHolderCard = view1.findViewById(R.id.tv_path_holder_card);
 
         File[] externalDirs = ContextCompat.getExternalFilesDirs(getContext(), null);
         // Метод getExternalFilesDirs() Получает массив путей, где приложение может хранить файлы:
         // externalDirs[0] — это внутренняя память (например:
         // externalDirs[1] — это SD-карта, если она вставлена
 
-        if (externalDirs.length > 1 && externalDirs[1] != null) {
-            // Проверка: В массиве есть хотя бы 2 пути (length > 1) и Второй путь (SD-карта) реально существует (не null).
-            // если проще то строка читается так "Если в массиве есть второй путь, и он реально указывает на SD-карту — работаем с ним!"           // Внешняя SD-карта доступна. Действие:           storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте           cardTvPathFolder.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране           runtimePermission(); // вызов метода запроса разрешений       } else {           // Если SD-карты нет — используем внутреннюю           storage = new File(Environment.getExternalStorageDirectory().getAbsolutePath()); //Используем стандартный путь к внутренней памяти           cardTvPathFolder.setText("Встроенная память: " + storage.getAbsolutePath()); //Отображаем, что работаем с внутренней           runtimePermission(); // вызов метода запроса разрешений
+            if (externalDirs.length > 1 && externalDirs[1] != null) {
+                // Проверка: В массиве есть хотя бы 2 пути (length > 1) и Второй путь (SD-карта) реально существует (не null).
+                // если проще то строка читается так "Если в массиве есть второй путь, и он реально указывает на SD-карту — работаем с ним!"           // Внешняя SD-карта доступна. Действие:           storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте           cardTvPathFolder.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране           runtimePermission(); // вызов метода запроса разрешений       } else {           // Если SD-карты нет — используем внутреннюю           storage = new File(Environment.getExternalStorageDirectory().getAbsolutePath()); //Используем стандартный путь к внутренней памяти           cardTvPathFolder.setText("Встроенная память: " + storage.getAbsolutePath()); //Отображаем, что работаем с внутренней           runtimePermission(); // вызов метода запроса разрешений
 
-            // получаем доступ к внешней карте памяти
-            storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте
-         //  tvPathHolderCard.setText("Внешняя SD-карта (список файлов и папок):");// Показываешь путь на экране
-           tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
-            // вызов метода запроса разрешений
-            runtimePermission();
-        } else {
-            // Если SD-карты нет — используем внутреннюю
-            storage = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-            //Используем стандартный путь к внутренней памяти
-            tvPathHolderCard.setText("Встроенная память: " + storage.getAbsolutePath());
-            //Отображаем, что работаем с внутренней
-            runtimePermission(); // вызов метода запроса разрешений
-        }
+                // получаем доступ к внешней карте памяти
+                System.out.println("sss 1: " + storage1);
+                storage1 = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте
+                System.out.println("sss 2: " + storage1);
+                //tvPathHolderCard.setText("Внешняя SD-карта (список файлов и папок):");// Показываешь путь на экране
 
-        return view;
+                tvPathHolderCard.setText("SD-карта: " + storage1.getAbsolutePath());// Показываешь путь на экране
+                // вызов метода запроса разрешений
+                System.out.println("ddd 1: " + data1);
+                if (getArguments() != null) {
+                    data1 = getArguments().getString("path1");
+                    storage1 = new File(data1);
+                    System.out.println("ddd 2: " + data1);
+
+                }
+                runtimePermission();
+
+            } else {
+                // Если SD-карты нет — используем внутреннюю
+                storage1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+                //Используем стандартный путь к внутренней памяти
+//            if (getArguments() != null) {
+//                data = getArguments().getString("path");
+//                storage1 = new File(data);
+//            }
+                tvPathHolderCard.setText("Встроенная память: " + storage1.getAbsolutePath());
+                //Отображаем, что работаем с внутренней
+                runtimePermission(); // вызов метода запроса разрешений
+            }
+
+
+
+
+        return view1;
     }
 
     private void runtimePermission() {
@@ -132,28 +150,31 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
     }
 
     private void displayFiles() {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_card);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        List<File> fileList = new ArrayList<>();
-        fileList.addAll(findFiles(storage));
+        recyclerView1 = view1.findViewById(R.id.recycler_card);
+        recyclerView1.setHasFixedSize(true);
+        recyclerView1.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        List<File> fileList1 = new ArrayList<>();
+        fileList1.addAll(findFiles(storage1));
 
-        fileAdapter = new FileAdapter(getContext(), fileList, this);
-        recyclerView.setAdapter(fileAdapter);
+        fileAdapter = new FileAdapter(getContext(), fileList1, this);
+        recyclerView1.setAdapter(fileAdapter);
     }
 
     @Override
     public void onFileClicked(File file) {
-        if(file.isDirectory()){
-//            Bundle bundle = new Bundle();
-//            bundle.putString("path", storage.getAbsolutePath());
-          // InternalFragment internalFragment = new InternalFragment();
+        if (file.isDirectory()) {
+            Bundle bundle1 = new Bundle();
+            System.out.println("bbb: " + bundle1);
+            bundle1.putString("path1", file.getAbsolutePath());
+            System.out.println("bbb: " + bundle1);
+            // InternalFragment internalFragment = new InternalFragment();
             //internalFragment.setArguments(bundle);
-          CardFragment cardFragment = new CardFragment();
-//          cardFragment.setArguments(storage.getAbsolutePath());
+            CardFragment cardFragment = new CardFragment();
+            cardFragment.setArguments(bundle1);
 
-         // requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, cardFragment).addToBackStack(null).commit();
+
+            // requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, cardFragment).addToBackStack(null).commit();
 
         }
     }

@@ -78,7 +78,10 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
 
         //tvPathHolder.setText(storage.getAbsolutePath()); //
         tvPathHolder.setText("Внутренняя память (список файлов и папок):"); //
+
         runtimePermission();
+
+
 
         return view;
     }
@@ -162,6 +165,7 @@ public class InternalFragment extends Fragment implements OnFileSelectedListener
             bundle.putString("path", file.getAbsolutePath());
             InternalFragment internalFragment = new InternalFragment();
             internalFragment.setArguments(bundle);
+            System.out.println(bundle);
 
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, internalFragment).addToBackStack(null).commit();
         } else {
