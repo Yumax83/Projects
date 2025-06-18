@@ -1,7 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
+<!--Этот XML-файл (file_paths.xml) говорит Android'у:
+"Какие папки и файлы ты можешь превращать в content:// URI, чтобы другие приложения могли их безопасно открыть через FileProvider."
+Он как охранник на входе: “Вот тебе список зон, в которые можно заглядывать. Всё остальное — закрыто.”
 
-<external-path
-    name="external_files"
-    path="."/>
+<external-path name="external_files" path="." /> - Разрешает доступ к файлам во внешнем хранилище, например: /storage/emulated/0/ или /sdcard/
+Что значит path="."? - Точка означает "вся папка целиком", то есть разрешаем доступ ко всему содержимому внешней памяти.
+Когда используется? Когда ты работаешь с файлами, сохранёнными вне Android/data, но внутри обычного внешнего хранилища.
+Например: /storage/emulated/0/Download/file.pdf
+
+<files-path name="internal_files" path="." />  Это внутреннее приложение-хранилище, доступное только твоему приложению: /data/data/твоё_приложение/files/
+Когда используется? Когда ты сохраняешь файлы через context.getFilesDir() — и хочешь, чтобы другой апп (например, PDF-читалка) открыл этот файл.
+
+<root-path name="root" path="storage/" /> Это даёт доступ к корню /storage/, где лежат ВСЕ хранилища: storage/emulated/0/      /storage/0000-0000/
+Почему это важно? Без этого Android не сможет выдать URI для файлов на SD-карте
+Почему это может быть опасно?Даёт довольно широкий доступ. Если ты вдруг ошибёшься и попытаешься отдать чужое File, можно случайно раздать доступ к «не тем» файлам. Поэтому лучше использовать строго с умом — и всегда проверять, какой именно файл ты отдаёшь через FileProvider.
+
+Как всё это связывается вместе?  Когда ты вызываешь: Uri uri = FileProvider.getUriForFile(context, "твоё.пакетное.имя.provider", file);
+1. Android ищет путь file, и сравнивает его с правилами из file_paths.xml.
+2. Если file находится в папке, которая разрешена (по path), Android:
+- Преобразует обычный путь (например, /storage/emulated/0/file.pdf)
+- В безопасный content:// URI
+- И возвращает его
+Если файл не попадает под никакое правило — ты получаешь IllegalArgumentException.
+-->
+
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="external_files" path="." />
+    <files-path name="internal_files" path="." />
+    <root-path name="root" path="storage/" />
 </paths>
+
+
+    <!--<paths xmlns:android="http://schemas.android.com/apk/res/android">
+        <root-path name="root" path="." />
+    </paths>-->
+
+    <!--<paths xmlns:android="http://schemas.android.com/apk/res/android">
+        <external-path
+            name="external_files"
+            path="."
+            />
+    </paths>-->
