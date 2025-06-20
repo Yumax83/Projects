@@ -24,9 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.filemanagerprojectapp.FileAdapter;
 import com.example.filemanagerprojectapp.FileOpener;
@@ -45,7 +47,7 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
 
     private FileAdapter fileAdapter;
     private RecyclerView recyclerView;
-
+    private List<File> fileListCard;
     String data1;
 
     String[] items = {"Details", "Rename", "Delete"};
@@ -103,7 +105,7 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
             System.out.println("sss 1: " + storage);
 
             //getAbsolutePath().split("/Android")[0]);
-           // getAbsolutePath().substring(0,19);
+            // getAbsolutePath().substring(0,19);
 
             storage = new File(externalDirs[1].getAbsolutePath()); // Запоминаешь путь к папке на SD-карте
             System.out.println("sss 2: " + storage);
@@ -111,11 +113,11 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
 
             tvPathHolderCard.setText("SD-карта: " + storage.getAbsolutePath());// Показываешь путь на экране
             // вызов метода запроса разрешений
-           // System.out.println("ddd 1: " + data1);
+            // System.out.println("ddd 1: " + data1);
             if (getArguments() != null) {
                 data1 = getArguments().getString("path1");
                 storage = new File(data1);
-              //  System.out.println("ddd 2: " + data1);
+                //  System.out.println("ddd 2: " + data1);
 
             }
             runtimePermission();
@@ -143,7 +145,10 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
             }
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            }
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 displayFiles();
             }
         }
@@ -199,10 +204,10 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
         recyclerView = view.findViewById(R.id.recycler_card);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        List<File> fileList1 = new ArrayList<>();
-        fileList1.addAll(findFiles(storage));
+        List<File> fileListCard = new ArrayList<>();
+        fileListCard.addAll(findFiles(storage));
 
-        fileAdapter = new FileAdapter(getContext(), fileList1, this);
+        fileAdapter = new FileAdapter(getContext(), fileListCard, this);
         recyclerView.setAdapter(fileAdapter);
     }
 
@@ -210,9 +215,9 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
     public void onFileClicked(File file) {
         if (file.isDirectory()) {
             Bundle bundle = new Bundle();
-          //  System.out.println("bbb: " + bundle1);
+            //  System.out.println("bbb: " + bundle1);
             bundle.putString("path1", file.getAbsolutePath());
-         //  System.out.println("bbb: " + bundle1);
+            //  System.out.println("bbb: " + bundle1);
 
             CardFragment cardFragment = new CardFragment();
             cardFragment.setArguments(bundle);
@@ -226,7 +231,7 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
 
 
     @Override
-    public void onFileLongClicked(File file) {
+    public void onFileLongClicked(File file, int position) {
         final Dialog optionDialog = new Dialog(getContext());
         optionDialog.setContentView(R.layout.option_dialog);
         optionDialog.setTitle("Select Options.");
@@ -269,9 +274,112 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
                                 optionDialog.closeOptionsMenu(); //закрывает одно окно
                             }
                         });
-
                         AlertDialog alertDialogDetails = detailDialog.create();
                         alertDialogDetails.show();
+                        break;
+
+                    case "Rename":
+                        AlertDialog.Builder renameDialog = new AlertDialog.Builder(getContext());
+                        renameDialog.setTitle("Rename file:");
+                        final EditText name = new EditText(getContext());
+                        renameDialog.setView(name);
+
+                        renameDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!file.isDirectory()) {
+                                    String newName1 = name.getEditableText().toString();
+                                    String extension1 = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
+                                    File current1 = new File(file.getAbsolutePath());
+                                    File destination1 = new File(file.getAbsolutePath().replace(file.getName(), newName1) + extension1);
+                                    if (current1.renameTo(destination1)) {
+                                        fileListCard.set(position, destination1);
+                                        fileAdapter.notifyItemChanged(position);
+                                        Toast.makeText(getContext(), "Renamed!", Toast.LENGTH_SHORT).show();
+                                        displayFiles();
+                                    } else {
+                                        Toast.makeText(getContext(), "Couldn't Rename!", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    String newName1 = name.getEditableText().toString();
+                                    File current1 = new File(file.getAbsolutePath());
+                                    File destination1 = new File(file.getAbsolutePath().replace(file.getName(), newName1));
+                                    if (current1.renameTo(destination1)) {
+                                        fileListCard.set(position, destination1);
+                                        fileAdapter.notifyItemChanged(position);
+                                        Toast.makeText(getContext(), "Renamed!", Toast.LENGTH_SHORT).show();
+                                        displayFiles();
+                                    } else {
+                                        Toast.makeText(getContext(), "Couldn't Rename!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        });
+
+//                        renameDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String newName1 = name.getEditableText().toString();
+//
+//                                File current1 = new File(file.getAbsolutePath());
+//                                File destination1;
+//                                if (!file.isDirectory()) {
+//                                    String extension1 = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf("."));
+//
+//                                    destination1 = new File(file.getAbsolutePath().replace(file.getName(), newName1) + extension1);
+//                                } else {
+//                                    destination1 = new File(file.getAbsolutePath().replace(file.getName(), newName1));
+//                               }
+//                                if (current1.renameTo(destination1)) {
+//                                  fileListCard.set(position, destination1);
+//                                   fileAdapter.notifyItemChanged(position);
+//                                    Toast.makeText(getContext(), "Renamed!", Toast.LENGTH_SHORT).show();
+//
+//                                    displayFiles();
+//
+//                                } else {
+//                                    Toast.makeText(getContext(), "Couldn't Rename!", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+
+                        renameDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                optionDialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alertDialogRename = renameDialog.create();
+                        alertDialogRename.show();
+                        break;
+
+                    case "Delete":
+                        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getContext());
+                        deleteDialog.setTitle("Delete " + file.getName() + "?");
+
+                        deleteDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                file.delete();
+                                displayFiles();
+//                                fileList.remove(position);
+//                                fileList.clear();
+//                                fileList.addAll(findFiles(storage));
+//                                fileAdapter.notifyDataSetChanged();
+                                Toast.makeText(getContext(), "Deleted file: " + file.getName(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        deleteDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                optionDialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alertDialogDelete = deleteDialog.create();
+                        alertDialogDelete.show();
                         break;
 
                 }
@@ -279,6 +387,7 @@ public class CardFragment extends Fragment implements OnFileSelectedListener {
         });
 
     }
+
     class CustomAdapter1 extends BaseAdapter {
 
         @Override
