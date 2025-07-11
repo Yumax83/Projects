@@ -1,21 +1,97 @@
 1.	Выведите список студентов физико-математического факультета.
 
+SELECT s.FIO
+FROM Student s, G g, Kafedra k
+WHERE k.Decanat = "Физико-математический" AND k.Kafedra=g.Kafedra AND s.[Group]=g.[Group];
 
+SELECT FIO
+FROM Student
+WHERE "Group" IN 
+    (SELECT "Group" 
+    FROM G
+    WHERE Kafedra IN
+     (SELECT Kafedra
+      FROM  Kafedra  
+      WHERE Decanat = "Физико-математический")
+    );
 
 
 2.	Студенты какой кафедры и факультета сдавали социологию.
 
+
+SELECT k.Kafedra, k.Decanat, s.FIO
+FROM Kafedra k, Exzamen e, Student s, G g
+WHERE e.Predmet GLOB "Социология"
+ AND e.Id_St = s.Id_St 
+ AND s."Group" = g."Group" 
+ AND g.Kafedra = k.Kafedra;
+
+SELECT Kafedra, Decanat
+FROM Kafedra 
+WHERE Kafedra IN 
+    (SELECT Kafedra FROM G WHERE "Group" IN 
+        (SELECT "Group" FROM Student WHERE ID_St IN 
+            (SELECT Id_St FROM Exzamen WHERE Predmet='Социология' )));
+
+SELECT Kafedra, Decanat, (SELECT FIO 
+        FROM Student 
+        WHERE ID_St=(SELECT Id_St FROM Exzamen 
+        WHERE Predmet="Социология") ) 
+    FROM Kafedra WHERE Kafedra IN 
+    (SELECT Kafedra 
+    FROM G WHERE "Group" IN 
+    (SELECT "Group" FROM Student 
+    WHERE ID_St IN (SELECT Id_St FROM Exzamen WHERE Predmet='Социология' )))
+
+
 3.	Выведите кафедры, список студентов, список студентов в алфавитном порядке.
+
+SELECT s.FIO, (SELECT g.Kafedra
+                FROM G g
+                WHERE s."Group" = g."Group") AS Кафедра
+FROM Student s
+ORDER BY s.FIO;
+
+
 
 4.	Вывести номера зачеток только студентов физико-технического факультета.
 
+
+
 5.	Выведите студентов физико-технического факультета сдавших иностранный язык на 5.
+
+
+SELECT FIO 
+FROM Student 
+WHERE "Group" IN 
+    (SELECT "Group"
+    FROM G 
+    WHERE Kafedra IN 
+        (SELECT Kafedra 
+        FROM Kafedra
+        WHERE Decanat="Физико-технический")) 
+            AND ID_ST IN 
+            (SELECT Id_St
+             FROM Exzamen WHERE Predmet='Иностр. язык' AND Ball=5 );
 
 6.	Подсчитать сколько различных предметов сдавалось в сессию.
 
 7.	Напишите запрос, который выводит средний балл по экзаменам Васильевой.
 
 8.	Определите сколько человек учится на каждой специальности.
+
+
+SELECT COUNT (Special), Special
+FROM Student
+GROUP BY Special;
+
+SELECT Special, COUNT (FIO)
+FROM Student
+GROUP BY Special
+HAVING COUNT (FIO) <
+(SELECT COUNT(FIO) FROM Student);
+
+
 
 9.	Напишите запрос, который покажет все группы физико-технического факультета.
 
