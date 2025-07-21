@@ -2,10 +2,13 @@ package com.example.sqliteapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.LinkedList;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String USER = "user";
@@ -37,4 +40,47 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
     }
+
+    public LinkedList <Data> getAll() {
+        LinkedList<Data>  list = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(USER, null,null,null,null,null,null);
+
+        if (cursor.moveToFirst()){
+            do{
+                int id_n = cursor.getColumnIndex(NAME);
+                int id_s = cursor.getColumnIndex(SURNAME);
+                int id_y = cursor.getColumnIndex(AGE);
+
+                Data data = new Data(cursor.getString(id_n), cursor.getString(id_s), cursor.getInt(id_y));
+                list.add(data);
+
+
+            }while (cursor.moveToNext());
+
+        }
+                db.close();
+        return list;
+    }
+
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(USER, null, null);
+        db.close();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

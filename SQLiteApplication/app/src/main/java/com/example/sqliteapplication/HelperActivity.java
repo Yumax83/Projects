@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.LinkedList;
+
 public class HelperActivity extends AppCompatActivity {
     DBHelper dbHelper;
     TextView tvOut;
@@ -51,5 +53,24 @@ public class HelperActivity extends AppCompatActivity {
             }
         });
 
+        btnGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkedList<Data> list = dbHelper.getAll();
+
+                String text = "";
+                for (Data d : list) {
+                    text = text + d.name + " " + d.surname + " " + d.age + "\n";
+                }
+
+                tvOut.setText(text);
+            }
+        });
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.deleteAll();
+            }
+        });
     }
 }
