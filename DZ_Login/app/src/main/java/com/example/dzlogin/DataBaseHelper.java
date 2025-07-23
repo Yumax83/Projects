@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "user_record_medicLab.db";
+    private static final String DATABASE_NAME = "user_record.db";
     private static final String TABLE_NAME = "user_data";
     private static final String ID = "id";
     private static final String MAIL_TEXT = "mail TEXT";

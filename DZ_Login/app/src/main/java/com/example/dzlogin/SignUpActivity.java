@@ -1,5 +1,6 @@
 package com.example.dzlogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,13 +40,25 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = passwordSignUp.getText().toString();
                 String confirmPassword = passwordConfirmSignUp.getText().toString();
 
-                if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "All field are mandatory \n (Все поля являются обязательными для заполнения)", Toast.LENGTH_SHORT).show();
+                if(email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
+                    Toast.makeText(SignUpActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (password.equals(confirmPassword)) {
+                    if(password.equals(confirmPassword)){
                         boolean checkUserEmail = myDB.checkEmail(email);
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Invalid Password \n (Пароли не совпадают)", Toast.LENGTH_SHORT).show();
+                        if(!checkUserEmail){
+                            boolean insert = myDB.registerUser(email, password);
+                            if(insert){
+                                Toast.makeText(SignUpActivity.this, "User Register Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(SignUpActivity.this, "Register Error", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "User already exists. Please login", Toast.LENGTH_SHORT).show();
+                        }
+                    } else{
+                        Toast.makeText(SignUpActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
