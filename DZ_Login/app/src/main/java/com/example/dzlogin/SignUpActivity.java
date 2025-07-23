@@ -1,4 +1,4 @@
-package com.example.loginsingup;
+package com.example.dzlogin;
 
 import android.os.Bundle;
 import android.view.View;
