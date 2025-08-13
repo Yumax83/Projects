@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="green">#19E721</color>
+    <color name="red">#E42312</color>
+    <color name="black_green">#234323</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="one">#88B2CBB5</color>
-    <color name="two">#4A944D</color>
+    <color name="gray">#A09B9B</color>
+    <color name="one">#88AFDCB6</color>
+    <color name="two">#7DC780</color>
+    <color name="blue">#1130E2</color>
 </resources>

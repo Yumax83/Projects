@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialog_fon"
+    android:background="@drawable/main"
+    android:layout_gravity="center"
+    android:scaleType="centerCrop"
+    android:layout_margin="50dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="730dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+
+        <TextView
+            android:id="@+id/button_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/button_stroke_black_opacity_press_white"
+            android:gravity="center"
+            android:text="X"
+            android:textStyle="bold" />
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/description_end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/level_one_end"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="22sp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/reslevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text=" Вы набрали:  "
+            android:textColor="@color/black_green"
+            android:textSize="20sp"
+            android:textStyle="italic|bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/markLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text=" (                 )  "
+                android:textColor="@color/black_green"
+                android:textSize="20sp"
+                android:textStyle="italic|bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/text_description_end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/level_one_text_end"
+                android:textAlignment="center"
+                android:textColor="@color/black_green"
+                android:textSize="18sp" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_stroke_black_opacity_press_white"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/text_continue"
+            android:textColor="@color/black_green"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+</LinearLayout>
