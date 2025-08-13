@@ -6,15 +6,38 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/pic"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/pic"
         android:supportsRtl="true"
         android:theme="@style/Theme.DZQuizGame"
         tools:targetApi="31">
+
         <activity
-            android:name=".GameLevels"
-            android:exported="false" />
+            android:name=".Level1"
+            android:exported="false"
+            android:screenOrientation="behind"
+            tools:ignore="DiscouragedApi"/>
+        <activity
+            android:name=".Level2"
+            android:exported="false"
+            android:screenOrientation="behind"
+            tools:ignore="DiscouragedApi"/>
+        <activity
+            android:name=".Level3"
+            android:exported="false"
+            android:screenOrientation="behind"
+            tools:ignore="DiscouragedApi"/>
+        <activity
+            android:name=".Level4"
+            android:exported="false"
+            android:screenOrientation="behind"
+            tools:ignore="DiscouragedApi"/>
+        <activity
+            android:name=".Level5"
+            android:exported="false"
+            android:screenOrientation="behind"
+            tools:ignore="DiscouragedApi"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -24,10 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <activity
+            android:name=".GameLevels"
+            android:exported="false" />
     </application>
 
 </manifest>

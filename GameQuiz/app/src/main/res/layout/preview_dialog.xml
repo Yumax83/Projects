@@ -14,50 +14,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/button_close"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:text="&lt;"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:layout_gravity="start"
             android:background="@drawable/button_stroke_dark_red_press_white"
-            android:layout_gravity="start"/>
+            android:gravity="center"
+            android:text="&lt;"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/preview_img"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:srcCompat="@drawable/number_lev_one"
+            android:layout_marginTop="10dp"
             android:layout_weight="60"
-            android:layout_marginTop="10dp"/>
+            app:srcCompat="@drawable/number_lev_one" />
 
         <TextView
             android:id="@+id/text_description"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/level_one"
+            android:layout_marginTop="10dp"
             android:layout_weight="30"
+            android:text="@string/level_one"
             android:textColor="@color/black_opacity"
-            android:textSize="24sp"
-            android:layout_marginTop="10dp"/>
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/button_continue"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/text_continue"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_weight="10"
             android:background="@drawable/button_stroke_dark_red_press_white"
-            android:textColor="@color/black_opacity"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textSize="24sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:text="@string/text_continue"
+            android:textColor="@color/black_opacity"
+            android:textSize="24sp" />
     </LinearLayout>
 </LinearLayout>
