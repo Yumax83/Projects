@@ -36,6 +36,8 @@ dependencies {
     implementation (libs.imagepicker)
 // доб репозиторий
     implementation (libs.glide)
+// доб репозиторий
+    implementation(libs.swipe.layout.android)
 
     implementation(libs.appcompat)
     implementation(libs.material)

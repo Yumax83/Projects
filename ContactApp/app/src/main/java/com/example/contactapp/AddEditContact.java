@@ -32,19 +32,25 @@ public class AddEditContact extends AppCompatActivity {
 
     private ImageView profile;
     private EditText nameEdit, phoneEdit, emailEdit, noteEdit;
+    private String name, phone, email, note, id, addedTime, updateTime, image;
+    private Boolean isEditMode;
     private FloatingActionButton fab;
 
-    private String name, phone,email,note;
 
     //подключаем репозиторий работы с фото
     ActivityResultLauncher<Intent> imagePickLauncher;
     Uri selectedImageUri;
+
+    private DBHelper dbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_edit_contact);
+
+        dbHelper = new DBHelper(this);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +71,35 @@ public class AddEditContact extends AppCompatActivity {
         emailEdit = findViewById(R.id.emailEdit);
         noteEdit = findViewById(R.id.noteEdit);
         fab = findViewById(R.id.fab);
+
+        Intent intent = getIntent();
+        isEditMode = intent.getBooleanExtra("isEditMode", false);
+
+        if (isEditMode) {
+            toolbar.setTitle("Update Contact");
+
+            id = intent.getStringExtra("ID");
+            name = intent.getStringExtra("NAME");
+            phone = intent.getStringExtra("PHONE");
+            email = intent.getStringExtra("EMAIL");
+            note = intent.getStringExtra("NOTE");
+            addedTime = intent.getStringExtra("ADD_EDIT_TIME");
+            updateTime = intent.getStringExtra("UPDATE_TIME");
+            image = intent.getStringExtra("IMAGE");
+
+            nameEdit.setText(name);
+            phoneEdit.setText(phone);
+            emailEdit.setText(email);
+            noteEdit.setText(note);
+
+            selectedImageUri = Uri.parse(image);
+            if (image.equals("null")) {
+                profile.setImageResource(R.drawable.baseline_person_24);
+            } else {
+                profile.setImageURI(selectedImageUri);
+            }
+        }
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +122,7 @@ public class AddEditContact extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImagePicker.with(AddEditContact.this).cropSquare().compress(512).maxResultSize(512,512).createIntent(new Function1<Intent, Unit>() {
+                ImagePicker.with(AddEditContact.this).cropSquare().compress(512).maxResultSize(512, 512).createIntent(new Function1<Intent, Unit>() {
                     @Override
                     public Unit invoke(Intent intent) {
                         imagePickLauncher.launch(intent);
@@ -102,19 +137,45 @@ public class AddEditContact extends AppCompatActivity {
         Glide.with(addEditContact).load(selectedImageUri).apply(RequestOptions.centerCropTransform()).into(profile);
     }
 
-    private void saveData() {
-        
+     private void saveData() {
         name = nameEdit.getText().toString();
-        phone=phoneEdit.getText().toString();
-        email=emailEdit.getText().toString();
-        note=noteEdit.getText().toString();
-        
+        phone = phoneEdit.getText().toString();
+        email = emailEdit.getText().toString();
+        note = noteEdit.getText().toString();
+
+        String timeStamp = "" + System.currentTimeMillis();
+
         if (!name.isEmpty() || !phone.isEmpty() || !email.isEmpty() || !note.isEmpty()) {
+            if (isEditMode) {
+                dbHelper.updateContact(
+                        "" + id,
+                        "" + selectedImageUri,
+                        "" + name,
+                        "" + phone,
+                        "" + email,
+                        "" + note,
+                        "" + addedTime,
+                        "" + timeStamp
+                );
+                Toast.makeText(this, "Update Successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                long id = dbHelper.insertContact(
+                        "" + selectedImageUri,
+                        "" + name,
+                        "" + phone,
+                        "" + email,
+                        "" + note,
+                        "" + timeStamp,
+                        "" + timeStamp
+                );
+
+                Toast.makeText(this, "Inserted Successfully " + id, Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(this, "Nothing to save...", Toast.LENGTH_SHORT).show();
         }
+
     }
-
-
 }
 
 
