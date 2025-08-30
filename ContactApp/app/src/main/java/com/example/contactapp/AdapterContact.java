@@ -20,10 +20,12 @@ public class AdapterContact extends RecyclerView.Adapter<AdapterContact.ContactV
 
     private Context context;
     private ArrayList<ModelContact> contactList;
+    private DBHelper dbHelper;
 
     public AdapterContact(Context context, ArrayList<ModelContact> contactList) {
         this.context = context;
         this.contactList = contactList;
+        dbHelper = new DBHelper(context);
     }
 
     @NonNull
@@ -106,6 +108,8 @@ public class AdapterContact extends RecyclerView.Adapter<AdapterContact.ContactV
         holder.contactDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dbHelper.deleteContact(id);
+                ((MainActivity)context).onResume(); //обновить активити
 
                 Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
 

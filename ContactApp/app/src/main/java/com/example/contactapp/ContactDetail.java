@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +34,16 @@ public class ContactDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+
+        Button btn11 = findViewById(R.id.button);
+        btn11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             Intent intent1 = new Intent(Intent.ACTION_DIAL); //Открывает приложение звонков с уже подставленным номером.
+               intent1.setData(Uri.parse("tel:" +"+7 988 66 99 99"));
+                startActivity(intent1);
+            }
+        });
 
         dbHelper = new DBHelper(this);
 
@@ -92,3 +104,4 @@ public class ContactDetail extends AppCompatActivity {
         db.close();
     }
 }
+

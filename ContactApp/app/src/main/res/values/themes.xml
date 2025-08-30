@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.ContactApp" parent="Base.Theme.ContactApp" />
+
+
+<!--     добавляем стиль поиска в меню-->
+    <style name="ActionBarThemeOverLay">
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>

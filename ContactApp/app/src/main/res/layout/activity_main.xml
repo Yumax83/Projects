@@ -15,15 +15,17 @@
         android:background="@color/colorPrimary"
         app:title="Contact App"
         app:titleTextColor="@color/white"
-        android:paddingTop="20dp"
+        android:paddingTop="30dp"
         android:paddingBottom="20dp"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+        app:menu="@menu/main_top_menu"
+        app:theme="@style/ActionBarThemeOverLay"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="110dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_contact_item" />
 
