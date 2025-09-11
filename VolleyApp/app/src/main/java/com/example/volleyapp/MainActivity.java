@@ -33,18 +33,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
-        button=findViewById(R.id.button);
+        button = findViewById(R.id.button);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String url ="https://www.omdbapi.com/?i=tt3896198&apikey=9e113e82";
+            public void onClick(View view) {
+                String url =  "https://www.omdbapi.com/?i=tt3896198&apikey=9e113e82";
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -54,16 +53,12 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String source = jsonObject.getString("Source");
-                                String  value = jsonObject.getString("Value");
-
-                                textView.append("Source: "+source + "\nValue: "+value + "\n\n");
+                                String value = jsonObject.getString("Value");
+                                textView.append("Source: " + source + "\nValue: " + value + "\n\n");
                             }
-
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -75,6 +70,5 @@ public class MainActivity extends AppCompatActivity {
                 requestQueue.add(jsonObjectRequest);
             }
         });
-
     }
 }
