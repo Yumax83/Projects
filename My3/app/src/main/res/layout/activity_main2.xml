@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="400dp"
+    android:layout_height="430dp"
+    android:padding="16dp"
+    android:layout_gravity="start|top">
+
+    <!-- Image with clickable regions -->
+
+    <!-- Transparent TextViews for labels -->
+    <com.example.my3.ClickableImageView
+        android:id="@+id/imageView2"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        app:srcCompat="@drawable/image1" />
+
+    <TextView
+        android:id="@+id/label_top_beam"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="15dp"
+
+        android:background="#00000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/label_bottom_beam"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="360dp"
+        android:background="#00000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text="Bottom Beam"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/label_left_pillar"
+        android:layout_width="33dp"
+        android:layout_height="328dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="35dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text="Left Pillar"
+        android:textColor="#FFFFFF"
+        android:background="#00000000"/>
+
+    <TextView
+        android:id="@+id/label_right_pillar"
+        android:layout_width="28dp"
+        android:layout_height="328dp"
+        android:layout_marginLeft="335dp"
+        android:layout_marginTop="35dp"
+        android:background="#00000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text="Right Pillar"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/label_left_door"
+        android:layout_width="133dp"
+        android:layout_height="323dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="35dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text="Left Door"
+        android:textColor="#FFFFFF"
+        android:background="#00000000"/>
+
+    <TextView
+        android:id="@+id/label_right_door"
+        android:layout_width="152dp"
+        android:layout_height="318dp"
+        android:layout_marginLeft="185dp"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
+        android:text="Right Door"
+        android:textColor="#FFFFFF"
+        android:background="#00000000"/>
+</FrameLayout>
