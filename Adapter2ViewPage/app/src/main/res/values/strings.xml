@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Adapter2ViewPage</string>
+    <string name="spinner_prompt">Choose an option</string>
+    <string name="change_variant">Change variant...</string>
+</resources>
