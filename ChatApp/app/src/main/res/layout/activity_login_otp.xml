@@ -22,7 +22,7 @@
             android:layout_height="32dp"
             android:layout_margin="10dp"
             android:background="@drawable/circular_bg"
-            android:backgroundTint="@color/color_primary">
+            android:backgroundTint="@color/light_gray">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:layout_height="32dp"
             android:layout_margin="10dp"
             android:background="@drawable/circular_bg"
-            android:backgroundTint="@color/light_gray">
+            android:backgroundTint="@color/color_primary">
 
             <TextView
                 android:layout_width="wrap_content"

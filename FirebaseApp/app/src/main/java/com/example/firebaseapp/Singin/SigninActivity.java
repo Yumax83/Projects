@@ -45,7 +45,7 @@ public class SigninActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signin);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//   инициализация FirebaseAuth
 
 
         // инициализация sharedPref
