@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginOtpActivity extends AppCompatActivity {
 
     String phoneNumber;
-    Long timeoutSeconds = 20L; //время в секундах
+    Long timeoutSeconds = 60L; //время в секундах
 
     String verificationCode;
     PhoneAuthProvider.ForceResendingToken resendingToken;
@@ -93,7 +94,7 @@ public class LoginOtpActivity extends AppCompatActivity {
                 .setActivity(this)
                 .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) { //`
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) { //
                         signIn(phoneAuthCredential);
                         setInProgress(false);
                     }
@@ -120,9 +121,9 @@ public class LoginOtpActivity extends AppCompatActivity {
             PhoneAuthProvider.verifyPhoneNumber(builder.build());
         }
     }
-
     private void startResendTimer() {
-        resendOtpTextView.setEnabled(false);
+
+        otpInput.setVisibility(View.VISIBLE);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -130,15 +131,36 @@ public class LoginOtpActivity extends AppCompatActivity {
                 timeoutSeconds--;
                 resendOtpTextView.setText("Resend OTP " + timeoutSeconds + " seconds");
                 if(timeoutSeconds <= 0){
-                    timeoutSeconds = 60L;
+                    timeoutSeconds = 30L;
                     timer.cancel();
                     runOnUiThread(() -> {
-                        resendOtpTextView.setEnabled(true);
+
+                        otpInput.setVisibility(View.GONE);
+
+                        nextBtn.setText("Back");
                     });
                 }
             }
         }, 0, 1000);
     }
+//    private void startResendTimer() {
+//        resendOtpTextView.setEnabled(false);
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                timeoutSeconds--;
+//                resendOtpTextView.setText("Resend OTP " + timeoutSeconds + " seconds");
+//                if(timeoutSeconds <= 0){
+//                    timeoutSeconds = 60L;
+//                    timer.cancel();
+//                    runOnUiThread(() -> {
+//                        resendOtpTextView.setEnabled(true);
+//                    });
+//                }
+//            }
+//        }, 0, 1000);
+//    }
 
 
 
